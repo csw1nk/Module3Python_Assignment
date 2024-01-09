@@ -29,7 +29,8 @@ for candidate, votes in candidates.items(): #.items return a list of pairs found
     percentage = (votes / total_votes) * 100 #calculating the percentage
     candidates[candidate] = (votes, percentage) #updating the dictionary
 
-# Print the election results
+# Printing the election results
+print("----------------------------")
 print("Election Results")
 print("----------------------------")
 print(f"Total Votes: {total_votes}")
@@ -40,19 +41,17 @@ print("----------------------------")
 print(f"Winner: {winner}")#finally setting the winner
 print("----------------------------")
 
-# #writing results to analysis folders, similar to PyBank with headers of Metric and Value
-output_csv_file = 'analysis/election_results.csv'
-headers = ["Metric", "Value"]
-with open(output_csv_file, 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerow(headers)
-    #writing out the total votes and its value
-    writer.writerow(["Total Votes", total_votes])
-    # writing each candidates vote count using looping for each candidate - candidate name and how much votes is the .items function
-    for candidate, (votes, _) in candidates.items():
-        writer.writerow([candidate, votes])
-    # write out the winner
-    writer.writerow(["Winner", winner])
+output_file = 'analysis/election_results.txt' #reference for writing to .txt - https://www.geeksforgeeks.org/reading-writing-text-files-python/ 
+with open(output_file, 'w') as file:
+    file.write("Election Results\n")
+    file.write("-------------------------\n")
+    file.write(f"Total Votes: {total_votes}\n")
+    file.write("-------------------------\n")
+    for candidate, (votes, percentage) in candidates.items(): #same as above looping through each candidate name and how much votes is the .items function
+        results = f"{candidate}: {percentage:.3f}% ({votes})\n"
+        file.write(results)
+    file.write("-------------------------\n")
+    file.write(f"Winner: {winner}\n")
+    file.write("-------------------------\n")
 
-#checking that results printed correctly to folder
-print(f"Results written to: {output_csv_file} successfully")
+print("Results written to", output_file)
